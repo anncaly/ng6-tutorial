@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, NavigationEnd } from "@angular/router";
 
 @Component({
   selector: 'app-sidebar',
@@ -6,8 +7,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
+  currentUrl: string;
 
-  constructor() { }
+  constructor(private router: Router) {
+    //router.events.subscribe((_: NavigationEnd) => this.currentUrl = this.router.url);
+    router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.currentUrl = event.url;
+      }
+    });
+  }
 
   ngOnInit() {
   }
